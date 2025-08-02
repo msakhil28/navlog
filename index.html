@@ -335,24 +335,25 @@
         }
         
         /* Adjust column widths for print */
-        #navlog th:nth-child(1), #navlog td:nth-child(1) { width: 6%; } /* CP */
-        #navlog th:nth-child(2), #navlog td:nth-child(2) { width: 6%; } /* VOR Ident */
-        #navlog th:nth-child(3), #navlog td:nth-child(3) { width: 6%; } /* VOR Freq */
-        #navlog th:nth-child(4), #navlog td:nth-child(4) { width: 6%; } /* Course */
-        #navlog th:nth-child(5), #navlog td:nth-child(5) { width: 6%; } /* Wind Dir */
-        #navlog th:nth-child(6), #navlog td:nth-child(6) { width: 6%; } /* Wind Vel */
+        #navlog th:nth-child(1), #navlog td:nth-child(1) { width: 5%; } /* CP */
+        #navlog th:nth-child(2), #navlog td:nth-child(2) { width: 5%; } /* VOR Ident */
+        #navlog th:nth-child(3), #navlog td:nth-child(3) { width: 5%; } /* VOR Freq */
+        #navlog th:nth-child(4), #navlog td:nth-child(4) { width: 5%; } /* Course */
+        #navlog th:nth-child(5), #navlog td:nth-child(5) { width: 5%; } /* Wind Dir */
+        #navlog th:nth-child(6), #navlog td:nth-child(6) { width: 5%; } /* Wind Vel */
         #navlog th:nth-child(7), #navlog td:nth-child(7) { width: 5%; } /* TAS */
-        #navlog th:nth-child(8), #navlog td:nth-child(8) { width: 5%; } /* TC */
-        #navlog th:nth-child(9), #navlog td:nth-child(9) { width: 5%; } /* WCA */
-        #navlog th:nth-child(10), #navlog td:nth-child(10) { width: 5%; } /* TH */
-        #navlog th:nth-child(11), #navlog td:nth-child(11) { width: 5%; } /* Var */
-        #navlog th:nth-child(12), #navlog td:nth-child(12) { width: 5%; } /* MH */
-        #navlog th:nth-child(13), #navlog td:nth-child(13) { width: 5%; } /* Dist */
-        #navlog th:nth-child(14), #navlog td:nth-child(14) { width: 5%; } /* GS */
-        #navlog th:nth-child(15), #navlog td:nth-child(15) { width: 6%; } /* ETE */
-        #navlog th:nth-child(16), #navlog td:nth-child(16) { width: 5%; } /* GPH */
-        #navlog th:nth-child(17), #navlog td:nth-child(17) { width: 6%; } /* Fuel */
-        #navlog th:nth-child(18), #navlog td:nth-child(18) { display: none; } /* Delete button */
+        #navlog th:nth-child(8), #navlog td:nth-child(8) { width: 6%; } /* Altitude */
+        #navlog th:nth-child(9), #navlog td:nth-child(9) { width: 4%; } /* TC */
+        #navlog th:nth-child(10), #navlog td:nth-child(10) { width: 4%; } /* WCA */
+        #navlog th:nth-child(11), #navlog td:nth-child(11) { width: 4%; } /* TH */
+        #navlog th:nth-child(12), #navlog td:nth-child(12) { width: 4%; } /* Var */
+        #navlog th:nth-child(13), #navlog td:nth-child(13) { width: 4%; } /* MH */
+        #navlog th:nth-child(14), #navlog td:nth-child(14) { width: 5%; } /* Dist */
+        #navlog th:nth-child(15), #navlog td:nth-child(15) { width: 5%; } /* GS */
+        #navlog th:nth-child(16), #navlog td:nth-child(16) { width: 6%; } /* ETE */
+        #navlog th:nth-child(17), #navlog td:nth-child(17) { width: 4%; } /* GPH */
+        #navlog th:nth-child(18), #navlog td:nth-child(18) { width: 6%; } /* Fuel */
+        #navlog th:nth-child(19), #navlog td:nth-child(19) { display: none; } /* Delete button */
         
         .freq-section {
           display: block !important;
@@ -529,6 +530,14 @@
           >
             🗑️ Delete
           </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="reverseLog()"
+            aria-label="Reverse navigation log for return flight"
+          >
+            🔄 Reverse Log
+          </button>
         </div>
       </div>
 
@@ -550,6 +559,7 @@
               <th>Wind Dir</th>
               <th>Wind Vel</th>
               <th>TAS</th>
+              <th>Altitude</th>
               <th>TC</th>
               <th>WCA</th>
               <th>TH</th>
@@ -566,7 +576,7 @@
           <tbody id="navlog-body"></tbody>
           <tfoot>
             <tr class="total-row">
-              <td colspan="13"><strong>TOTALS</strong></td>
+              <td colspan="14"><strong>TOTALS</strong></td>
               <td id="total-gs"><strong>-</strong></td>
               <td id="total-ete"><strong>-</strong></td>
               <td colspan="1"></td>
@@ -733,6 +743,7 @@
           <td><input id="windDir${i}" class="form-control form-control-sm" type="number" oninput="calculateRow(${i})" /></td>
           <td><input id="windVel${i}" class="form-control form-control-sm" type="number" oninput="calculateRow(${i})" /></td>
           <td><input id="tas${i}" class="form-control form-control-sm" type="number" oninput="calculateRow(${i})" /></td>
+          <td><input id="altitude${i}" class="form-control form-control-sm" type="number" placeholder="MSL" /></td>
           <td><input id="tc${i}" class="form-control form-control-sm" type="number" readonly /></td>
           <td><input id="wca${i}" class="form-control form-control-sm" readonly /></td>
           <td><input id="th${i}" class="form-control form-control-sm" readonly /></td>
@@ -784,9 +795,9 @@
           s = Math.round((ete - m) * 60);
         const eteFmt = `${m}:${s.toString().padStart(2, "0")}`,
           fuel = gph * ete;
-        document.getElementById(`wca${i}`).value = wca.toFixed(1);
-        document.getElementById(`th${i}`).value = th.toFixed(1);
-        document.getElementById(`mh${i}`).value = mh.toFixed(1);
+        document.getElementById(`wca${i}`).value = Math.round(wca);
+        document.getElementById(`th${i}`).value = Math.round(th);
+        document.getElementById(`mh${i}`).value = Math.round(mh);
         document.getElementById(`gs${i}`).value = gs.toFixed(1);
         document.getElementById(`ete${i}`).value = eteFmt;
         document.getElementById(`fuel${i}`).value = fuel.toFixed(1);
@@ -1015,6 +1026,87 @@
           updateSavedLogsDropdown();
           alert(`Navigation log "${selectedLog}" deleted successfully.`);
         }
+      }
+
+      function reverseLog() {
+        const tbody = document.getElementById("navlog-body");
+        const rows = tbody.querySelectorAll("tr");
+        
+        if (rows.length === 0) {
+          alert('No navigation log data to reverse. Please add some waypoints first.');
+          return;
+        }
+
+        if (!confirm('Reverse the navigation log for return flight? This will swap departure/arrival airports and reverse waypoint order.')) {
+          return;
+        }
+
+        // Store current data
+        const rowsData = [];
+        rows.forEach((row, index) => {
+          const rowData = {};
+          const inputs = row.querySelectorAll('input');
+          inputs.forEach(input => {
+            if (input.id) {
+              const fieldName = input.id.replace(/\d+$/, ''); // Remove row number
+              rowData[fieldName] = input.value;
+            }
+          });
+          rowsData.push(rowData);
+        });
+
+        // Swap departure and arrival airports
+        const depCode = document.getElementById('depCode').value;
+        const arrCode = document.getElementById('arrCode').value;
+        
+        document.getElementById('depCode').value = arrCode;
+        document.getElementById('arrCode').value = depCode;
+        
+        // Trigger airport data fetch for swapped codes
+        if (arrCode) fetchAirport(arrCode, 'dep');
+        if (depCode) fetchAirport(depCode, 'arr');
+
+        // Clear existing rows
+        tbody.innerHTML = '';
+        rowCount = 0;
+
+        // Reverse the order and recreate rows
+        rowsData.reverse().forEach((rowData, index) => {
+          addRow();
+          const currentRowIndex = rowCount - 1;
+          
+          // Populate basic data (non-calculated fields)
+          const fieldsToReverse = ['cp', 'vorIdent', 'vorFreq', 'course', 'windDir', 'windVel', 'tas', 'altitude', 'var', 'dist', 'gph'];
+          
+          fieldsToReverse.forEach(fieldName => {
+            const inputId = fieldName + currentRowIndex;
+            const input = document.getElementById(inputId);
+            if (input && rowData[fieldName]) {
+              if (fieldName === 'course') {
+                // Reverse the course by adding/subtracting 180 degrees
+                let reverseCourse = parseFloat(rowData[fieldName]) || 0;
+                reverseCourse = reverseCourse >= 180 ? reverseCourse - 180 : reverseCourse + 180;
+                input.value = Math.round(reverseCourse);
+                // Also update TC field
+                const tcInput = document.getElementById('tc' + currentRowIndex);
+                if (tcInput) tcInput.value = Math.round(reverseCourse);
+              } else {
+                input.value = rowData[fieldName];
+              }
+            }
+          });
+          
+          // Recalculate the row with new values
+          calculateRow(currentRowIndex);
+        });
+
+        // Update notes to indicate this is a reverse log
+        const notesTextarea = document.getElementById('notesTextarea');
+        const currentNotes = notesTextarea.value;
+        const reverseNote = `\n\n--- REVERSE LOG CREATED ${new Date().toLocaleString()} ---\nReturn flight: ${arrCode || '[DEP]'} → ${depCode || '[ARR]'}`;
+        notesTextarea.value = currentNotes + reverseNote;
+
+        alert('Navigation log reversed successfully! Departure and arrival airports have been swapped, waypoints reversed, and courses adjusted by 180°.');
       }
 
       function updateSavedLogsDropdown() {
