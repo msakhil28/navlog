@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>VFR Nav Log + Airport Frequencies</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 10px;
+        margin: 0;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #333;
+        border-collapse: collapse;
+        padding: 4px;
+        font-size: 12px;
+        text-align: center;
+      }
+      th {
+        background: #ddd;
+      }
+      input {
+        width: 60px;
+      }
+      .freq-table input {
+        width: 100px;
+      }
+      .table-wrapper {
+        overflow-x: auto;
+        max-width: 100%;
+      }
+      .freq-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 20px;
+      }
+      .freq-block {
+        flex: 1 1 300px;
+        min-width: 280px;
+      }
+      button {
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>VFR Navigation Log</h2>
+    <button onclick="addRow()">Add Row</button>
+    <div class="table-wrapper">
+      <table id="navlog">
+        <thead>
+          <tr>
+            <th>CP</th>
+            <th>VOR Ident</th>
+            <th>VOR Freq</th>
+            <th>Course</th>
+            <th>Wind Dir</th>
+            <th>Wind Vel</th>
+            <th>TAS</th>
+            <th>TC</th>
+            <th>WCA</th>
+            <th>TH</th>
+            <th>Var</th>
+            <th>MH</th>
+            <th>Dist</th>
+            <th>GS</th>
+            <th>ETE</th>
+            <th>GPH</th>
+            <th>Fuel</th>
+          </tr>
+        </thead>
+        <tbody id="navlog-body"></tbody>
+      </table>
+    </div>
+
+    <h2>Airport Frequencies</h2>
+    <div class="freq-section">
+      <!-- Departure -->
+      <div class="freq-block">
+        <h3>Departure Airport</h3>
+        <label>ICAO code:</label>
+        <input
+          id="depCode"
+          maxlength="4"
+          oninput="fetchAirport(this.value.toUpperCase(), 'dep')"
+        />
+        <div id="dep-details"></div>
+        <div class="table-wrapper">
+          <table id="dep-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Frequency (MHz)</th>
+              </tr>
+            </thead>
+            <tbody id="dep-body">
+              <tr>
+                <td colspan="2">Enter ICAO code</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Arrival -->
+      <div class="freq-block">
+        <h3>Arrival Airport</h3>
+        <label>ICAO code:</label>
+        <input
+          id="arrCode"
+          maxlength="4"
+          oninput="fetchAirport(this.value.toUpperCase(), 'arr')"
+        />
+        <div id="arr-details"></div>
+        <div class="table-wrapper">
+          <table id="arr-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Frequency (MHz)</th>
+              </tr>
+            </thead>
+            <tbody id="arr-body">
+              <tr>
+                <td colspan="2">Enter ICAO code</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let rowCount = 0;
+      function degToRad(d) {
+        return (d * Math.PI) / 180;
+      }
+      function radToDeg(r) {
+        return (r * 180) / Math.PI;
+      }
+
+      function addRow() {
+        const i = rowCount++;
+        const tbody = document.getElementById("navlog-body");
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+    <td><input id="cp${i}"></td>
+    <td><input id="vorIdent${i}"></td>
+    <td><input id="vorFreq${i}" type="text"></td>
+    <td><input id="course${i}" type="number"
+      oninput="document.getElementById('tc${i}').value = this.value; calculateRow(${i})"></td>
+    <td><input id="windDir${i}" type="number" oninput="calculateRow(${i})"></td>
+    <td><input id="windVel${i}" type="number" oninput="calculateRow(${i})"></td>
+    <td><input id="tas${i}" type="number" oninput="calculateRow(${i})"></td>
+    <td><input id="tc${i}" type="number" readonly></td>
+    <td><input id="wca${i}" readonly></td>
+    <td><input id="th${i}" readonly></td>
+    <td><input id="var${i}" type="number" oninput="calculateRow(${i})"></td>
+    <td><input id="mh${i}" readonly></td>
+    <td><input id="dist${i}" type="number" oninput="calculateRow(${i})"></td>
+    <td><input id="gs${i}" readonly></td>
+    <td><input id="ete${i}" readonly></td>
+    <td><input id="gph${i}" type="number" value="8" oninput="calculateRow(${i})"></td>
+    <td><input id="fuel${i}" readonly></td>`;
+        tbody.appendChild(tr);
+        calculateRow(i);
+      }
+      addRow();
+
+      function calculateRow(i) {
+        const get = (id) =>
+          parseFloat(document.getElementById(id + i)?.value) || 0;
+        const tc = get("tc"),
+          wd = get("windDir"),
+          wv = get("windVel"),
+          tas = get("tas");
+        const v = get("var"),
+          d = get("dist"),
+          gph = get("gph");
+        if (!tas || !d) return;
+        const wa = degToRad(wd - tc),
+          cross = wv * Math.sin(wa);
+        let wca = 0;
+        try {
+          wca = radToDeg(Math.asin(cross / tas));
+        } catch {}
+        const th = tc + wca,
+          mh = th + v;
+        const head = wv * Math.cos(wa),
+          gs = tas - head;
+        const ete = d / gs,
+          m = Math.floor(ete),
+          s = Math.round((ete - m) * 60);
+        const eteFmt = `${m}:${s.toString().padStart(2, "0")}`,
+          fuel = gph * ete;
+        document.getElementById(`wca${i}`).value = wca.toFixed(1);
+        document.getElementById(`th${i}`).value = th.toFixed(1);
+        document.getElementById(`mh${i}`).value = mh.toFixed(1);
+        document.getElementById(`gs${i}`).value = gs.toFixed(1);
+        document.getElementById(`ete${i}`).value = eteFmt;
+        document.getElementById(`fuel${i}`).value = fuel.toFixed(1);
+      }
+
+      async function fetchAirport(code, type) {
+        const body = document.getElementById(`${type}-body`);
+        const detailDiv = document.getElementById(`${type}-details`);
+        if (code.length !== 4) {
+          body.innerHTML = `<tr><td colspan="2">Enter valid ICAO code (e.g. KJFK)</td></tr>`;
+          detailDiv.innerHTML = "";
+          return;
+        }
+        const url = `https://airportdb.io/api/v1/airport/${code}?apiToken=1cdf6a463718d686c9d1e1698dfe1ae526f70feedd374b90759b2d74f31128fcf1de8889a0467a3e91855272e13a2477`;
+        try {
+          const resp = await fetch(url);
+          if (!resp.ok) throw new Error("Not found");
+          const data = await resp.json();
+
+          // Airport basic + runway info
+          const runways = (data.runways || [])
+            .map((rw) => {
+              return `RWY ${rw.he_ident || "N/A"} → ${rw.le_ident || "N/A"} (${rw.length_ft}ft / ${rw.width_ft})ft`;
+            })
+            .join("<br>");
+
+          detailDiv.innerHTML = `
+      <p><strong>Field Elevation:</strong> ${data.elevation_ft || "N/A"} ft</p>
+      <p><strong>Runway Length:</strong> ${
+        data.runways?.[0]?.length_ft || "N/A"
+      } ft</p>
+      <p><strong>Runway Width:</strong> ${
+        data.runways?.[0]?.width_ft || "N/A"
+      } ft</p>
+      <p><strong>Available Runways:</strong><br>${runways || "N/A"}</p>
+    `;
+
+          const freqs =
+            data.freqs || data.frequencies || data.communication || data.comms;
+          if (!Array.isArray(freqs) || !freqs.length) {
+            body.innerHTML =
+              '<tr><td colspan="2">No frequencies found</td></tr>';
+            return;
+          }
+          body.innerHTML = "";
+          freqs.forEach((fq) => {
+            body.insertAdjacentHTML(
+              "beforeend",
+              `<tr><td>${fq.type || "Unknown"}</td><td>${
+                fq.description || "Unknown"
+              }</td><td>${fq.frequency_mhz || fq.frequency}</td></tr>`
+            );
+          });
+        } catch (e) {
+          body.innerHTML = `<tr><td colspan="2">Airport not found</td></tr>`;
+          detailDiv.innerHTML = "";
+        }
+      }
+    </script>
+  </body>
+</html>
