@@ -34,17 +34,72 @@
         --bs-primary-hover: #238636;
       }
 
+      [data-theme="light"] {
+        --bs-body-bg: #ffffff;
+        --bs-body-color: #212529;
+        --bs-table-bg: #f8f9fa;
+        --bs-border-color: #dee2e6;
+        --bs-primary: #0d6efd;
+        --bs-primary-hover: #0b5ed7;
+      }
+
       body {
         background-color: var(--bs-body-bg);
         color: var(--bs-body-color);
         font-family: Arial, sans-serif;
         padding: 15px;
         margin: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
 
       h2,
       h3 {
         color: var(--bs-primary);
+      }
+
+      /* Header with theme toggle */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .theme-toggle {
+        background: none;
+        border: 2px solid var(--bs-primary);
+        color: var(--bs-primary);
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        background-color: var(--bs-primary);
+        color: var(--bs-body-bg);
+      }
+
+      /* Aircraft Registration Input */
+      .aircraft-reg {
+        margin-bottom: 1.5rem;
+      }
+
+      .aircraft-reg input {
+        background-color: var(--bs-table-bg);
+        border: 1px solid var(--bs-border-color);
+        color: var(--bs-body-color);
+        padding: 8px 12px;
+        font-size: 1rem;
+        border-radius: 0.375rem;
+        width: 200px;
+        font-weight: 600;
+        letter-spacing: 1px;
       }
 
       /* Override Bootstrap table dark styling */
@@ -62,6 +117,18 @@
         vertical-align: middle;
         color: var(--bs-body-color);
         padding: 0.5rem 0.75rem;
+      }
+
+      /* Total row styling */
+      .total-row {
+        background-color: var(--bs-primary);
+        color: #ffffff;
+        font-weight: bold;
+      }
+
+      .total-row td {
+        border-color: var(--bs-primary);
+        color: #ffffff;
       }
 
       /* Inputs inside tables */
@@ -97,6 +164,11 @@
         border-color: var(--bs-primary-hover);
       }
 
+      /* Print button */
+      .print-btn {
+        margin-left: 10px;
+      }
+
       /* Frequency section flex layout */
       .freq-section {
         display: flex;
@@ -111,6 +183,52 @@
         padding: 15px;
         border-radius: 0.5rem;
         box-shadow: 0 0 8px rgba(88, 166, 255, 0.2);
+      }
+
+      /* Save/Load section */
+      .save-load-section {
+        background-color: var(--bs-table-bg);
+        padding: 15px;
+        border-radius: 0.5rem;
+        border: 1px solid var(--bs-border-color);
+        margin-bottom: 1rem;
+      }
+
+      .save-load-section .form-control,
+      .save-load-section .form-select {
+        background-color: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+        color: var(--bs-body-color);
+      }
+
+      .save-load-section .form-control:focus,
+      .save-load-section .form-select:focus {
+        background-color: var(--bs-body-bg);
+        border-color: var(--bs-primary);
+        color: var(--bs-body-color);
+        box-shadow: 0 0 0 0.2rem rgba(88, 166, 255, 0.25);
+      }
+
+      /* Notes section */
+      .notes-section {
+        margin-top: 2rem;
+        background-color: var(--bs-table-bg);
+        padding: 20px;
+        border-radius: 0.5rem;
+        border: 1px solid var(--bs-border-color);
+      }
+
+      .notes-section textarea {
+        background-color: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+        color: var(--bs-body-color);
+        width: 100%;
+        min-height: 120px;
+        padding: 12px;
+        font-size: 14px;
+        border-radius: 0.375rem;
+        resize: vertical;
+        font-family: inherit;
       }
 
       label {
@@ -162,6 +280,155 @@
         .freq-section {
           flex-direction: column;
         }
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .theme-toggle {
+          align-self: flex-end;
+          margin-top: 10px;
+        }
+      }
+
+      /* Print styles */
+      @media print {
+        @page {
+          size: landscape;
+          margin: 0.5in;
+        }
+        
+        body {
+          background-color: white !important;
+          color: black !important;
+          padding: 5px;
+          font-size: 12px;
+        }
+        
+        .container-fluid {
+          padding: 0 !important;
+        }
+        
+        .theme-toggle,
+        .btn,
+        button,
+        .save-load-section {
+          display: none !important;
+        }
+        
+        /* Make table fit better */
+        .table-responsive {
+          overflow: visible !important;
+        }
+        
+        #navlog {
+          width: 100% !important;
+          font-size: 10px !important;
+          table-layout: fixed;
+        }
+        
+        #navlog th,
+        #navlog td {
+          padding: 2px 4px !important;
+          font-size: 9px !important;
+          word-wrap: break-word;
+          overflow: hidden;
+        }
+        
+        /* Adjust column widths for print */
+        #navlog th:nth-child(1), #navlog td:nth-child(1) { width: 6%; } /* CP */
+        #navlog th:nth-child(2), #navlog td:nth-child(2) { width: 6%; } /* VOR Ident */
+        #navlog th:nth-child(3), #navlog td:nth-child(3) { width: 6%; } /* VOR Freq */
+        #navlog th:nth-child(4), #navlog td:nth-child(4) { width: 6%; } /* Course */
+        #navlog th:nth-child(5), #navlog td:nth-child(5) { width: 6%; } /* Wind Dir */
+        #navlog th:nth-child(6), #navlog td:nth-child(6) { width: 6%; } /* Wind Vel */
+        #navlog th:nth-child(7), #navlog td:nth-child(7) { width: 5%; } /* TAS */
+        #navlog th:nth-child(8), #navlog td:nth-child(8) { width: 5%; } /* TC */
+        #navlog th:nth-child(9), #navlog td:nth-child(9) { width: 5%; } /* WCA */
+        #navlog th:nth-child(10), #navlog td:nth-child(10) { width: 5%; } /* TH */
+        #navlog th:nth-child(11), #navlog td:nth-child(11) { width: 5%; } /* Var */
+        #navlog th:nth-child(12), #navlog td:nth-child(12) { width: 5%; } /* MH */
+        #navlog th:nth-child(13), #navlog td:nth-child(13) { width: 5%; } /* Dist */
+        #navlog th:nth-child(14), #navlog td:nth-child(14) { width: 5%; } /* GS */
+        #navlog th:nth-child(15), #navlog td:nth-child(15) { width: 6%; } /* ETE */
+        #navlog th:nth-child(16), #navlog td:nth-child(16) { width: 5%; } /* GPH */
+        #navlog th:nth-child(17), #navlog td:nth-child(17) { width: 6%; } /* Fuel */
+        #navlog th:nth-child(18), #navlog td:nth-child(18) { display: none; } /* Delete button */
+        
+        .freq-section {
+          display: block !important;
+          page-break-before: always;
+        }
+        
+        .freq-block {
+          box-shadow: none;
+          border: 1px solid #ccc;
+          break-inside: avoid;
+          margin-bottom: 20px;
+          display: inline-block;
+          width: 48%;
+          vertical-align: top;
+        }
+        
+        .notes-section {
+          box-shadow: none;
+          border: 1px solid #ccc;
+          break-inside: avoid;
+          page-break-before: always;
+        }
+        
+        table, th, td {
+          border: 1px solid #000 !important;
+          color: black !important;
+        }
+        
+        thead {
+          background-color: #f0f0f0 !important;
+        }
+        
+        .total-row {
+          background-color: #e0e0e0 !important;
+          color: black !important;
+        }
+        
+        .total-row td {
+          color: black !important;
+        }
+        
+        input {
+          border: none !important;
+          background: transparent !important;
+          color: black !important;
+          font-weight: normal !important;
+          font-size: 9px !important;
+          padding: 0 !important;
+          width: 100% !important;
+          text-align: center;
+        }
+        
+        textarea {
+          border: 1px solid #ccc !important;
+          background: white !important;
+          color: black !important;
+          font-size: 10px !important;
+        }
+        
+        h2, h3 {
+          color: black !important;
+          font-size: 14px !important;
+          margin: 10px 0 5px 0;
+        }
+        
+        .aircraft-reg {
+          margin-bottom: 10px;
+        }
+        
+        .aircraft-reg input {
+          border: 1px solid #ccc !important;
+          background: white !important;
+          color: black !important;
+          font-size: 12px !important;
+          padding: 2px 4px !important;
+        }
       }
 
       /* Adjustments for iOS keyboard */
@@ -175,7 +442,28 @@
 
   <body>
     <div class="container-fluid p-0">
-      <h2>VFR Navigation Log</h2>
+      <div class="header">
+        <h2>VFR Navigation Log</h2>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+
+      <!-- Aircraft Registration -->
+      <div class="aircraft-reg">
+        <label for="aircraftReg">Aircraft Registration:</label>
+        <input 
+          id="aircraftReg" 
+          type="text" 
+          placeholder="N12345" 
+          maxlength="10"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="characters"
+          spellcheck="false"
+        />
+      </div>
+
       <button
         type="button"
         class="btn btn-primary mb-3"
@@ -184,6 +472,65 @@
       >
         Add Row
       </button>
+      
+      <button
+        type="button"
+        class="btn btn-secondary mb-3 print-btn"
+        onclick="printPage()"
+        aria-label="Print navigation log"
+      >
+        🖨️ Print
+      </button>
+
+      <!-- Save/Load Section -->
+      <div class="save-load-section mb-3">
+        <div class="d-flex flex-wrap gap-2 align-items-center">
+          <input 
+            id="saveNameInput" 
+            type="text" 
+            placeholder="Enter log name..." 
+            maxlength="50"
+            class="form-control"
+            style="width: 200px; background-color: var(--bs-table-bg); border: 1px solid var(--bs-border-color); color: var(--bs-body-color);"
+          />
+          <button
+            type="button"
+            class="btn btn-success"
+            onclick="saveLog()"
+            aria-label="Save current navigation log"
+          >
+            💾 Save Log
+          </button>
+          <select 
+            id="savedLogsDropdown" 
+            class="form-select"
+            style="width: 250px; background-color: var(--bs-table-bg); border: 1px solid var(--bs-border-color); color: var(--bs-body-color);"
+            onchange="updateLoadButton()"
+          >
+            <option value="">Select saved log...</option>
+          </select>
+          <button
+            type="button"
+            class="btn btn-info"
+            id="loadButton"
+            onclick="loadLog()"
+            aria-label="Load selected navigation log"
+            disabled
+          >
+            📂 Load
+          </button>
+          <button
+            type="button"
+            class="btn btn-warning"
+            id="deleteButton"
+            onclick="deleteLog()"
+            aria-label="Delete selected navigation log"
+            disabled
+          >
+            🗑️ Delete
+          </button>
+        </div>
+      </div>
 
       <div class="table-responsive">
         <table
@@ -217,6 +564,16 @@
             </tr>
           </thead>
           <tbody id="navlog-body"></tbody>
+          <tfoot>
+            <tr class="total-row">
+              <td colspan="13"><strong>TOTALS</strong></td>
+              <td id="total-gs"><strong>-</strong></td>
+              <td id="total-ete"><strong>-</strong></td>
+              <td colspan="1"></td>
+              <td id="total-fuel"><strong>-</strong></td>
+              <td></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
 
@@ -318,10 +675,22 @@
           </div>
         </div>
       </div>
+
+      <!-- Notes & NOTAMs Section -->
+      <div class="notes-section">
+        <h3>Notes & NOTAMs</h3>
+        <label for="notesTextarea">Flight planning notes, NOTAMs, and other important information:</label>
+        <textarea 
+          id="notesTextarea" 
+          placeholder="Enter your flight planning notes, NOTAMs, weather briefing details, alternate airports, fuel stops, special procedures, etc..."
+          aria-label="Notes and NOTAMs textarea"
+        ></textarea>
+      </div>
     </div>
 
     <script>
       let rowCount = 0;
+      let currentTheme = 'dark';
 
       function degToRad(d) {
         return (d * Math.PI) / 180;
@@ -329,6 +698,25 @@
 
       function radToDeg(r) {
         return (r * 180) / Math.PI;
+      }
+
+      function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById('theme-icon');
+        
+        if (currentTheme === 'dark') {
+          body.setAttribute('data-theme', 'light');
+          icon.textContent = '🌙';
+          currentTheme = 'light';
+        } else {
+          body.removeAttribute('data-theme');
+          icon.textContent = '☀️';
+          currentTheme = 'dark';
+        }
+      }
+
+      function printPage() {
+        window.print();
       }
 
       function addRow() {
@@ -359,11 +747,15 @@
         `;
         tbody.appendChild(tr);
         calculateRow(i);
+        updateTotals();
       }
 
       function removeRow(i) {
         const row = document.getElementById(`row${i}`);
-        if (row) row.remove();
+        if (row) {
+          row.remove();
+          updateTotals();
+        }
       }
 
       function calculateRow(i) {
@@ -398,6 +790,55 @@
         document.getElementById(`gs${i}`).value = gs.toFixed(1);
         document.getElementById(`ete${i}`).value = eteFmt;
         document.getElementById(`fuel${i}`).value = fuel.toFixed(1);
+        
+        updateTotals();
+      }
+
+      function updateTotals() {
+        const tbody = document.getElementById("navlog-body");
+        const rows = tbody.querySelectorAll("tr");
+        
+        let totalGS = 0;
+        let totalETEMinutes = 0;
+        let totalFuel = 0;
+        let validRows = 0;
+
+        rows.forEach((row) => {
+          const gsInput = row.querySelector('input[id^="gs"]');
+          const eteInput = row.querySelector('input[id^="ete"]');
+          const fuelInput = row.querySelector('input[id^="fuel"]');
+          
+          if (gsInput && eteInput && fuelInput) {
+            const gs = parseFloat(gsInput.value) || 0;
+            const fuel = parseFloat(fuelInput.value) || 0;
+            const eteStr = eteInput.value;
+            
+            if (gs > 0) {
+              totalGS += gs;
+              validRows++;
+            }
+            
+            if (eteStr && eteStr.includes(':')) {
+              const [hours, minutes] = eteStr.split(':').map(Number);
+              totalETEMinutes += (hours * 60) + minutes;
+            }
+            
+            if (fuel > 0) {
+              totalFuel += fuel;
+            }
+          }
+        });
+
+        // Update totals display
+        const avgGS = validRows > 0 ? (totalGS / validRows).toFixed(1) : '-';
+        const totalHours = Math.floor(totalETEMinutes / 60);
+        const remainingMinutes = totalETEMinutes % 60;
+        const totalETEFormatted = totalETEMinutes > 0 ? `${totalHours}:${remainingMinutes.toString().padStart(2, '0')}` : '-';
+        const totalFuelFormatted = totalFuel > 0 ? totalFuel.toFixed(1) : '-';
+
+        document.getElementById('total-gs').innerHTML = `<strong>${avgGS}</strong>`;
+        document.getElementById('total-ete').innerHTML = `<strong>${totalETEFormatted}</strong>`;
+        document.getElementById('total-fuel').innerHTML = `<strong>${totalFuelFormatted}</strong>`;
       }
 
       async function fetchAirport(code, type) {
@@ -458,8 +899,157 @@
         }
       }
 
+      // Save/Load functionality
+      function saveLog() {
+        const logName = document.getElementById('saveNameInput').value.trim();
+        if (!logName) {
+          alert('Please enter a name for your navigation log.');
+          return;
+        }
+
+        const logData = {
+          aircraftReg: document.getElementById('aircraftReg').value,
+          depCode: document.getElementById('depCode').value,
+          arrCode: document.getElementById('arrCode').value,
+          notes: document.getElementById('notesTextarea').value,
+          rows: [],
+          savedAt: new Date().toISOString()
+        };
+
+        // Save all navigation log rows
+        const tbody = document.getElementById("navlog-body");
+        const rows = tbody.querySelectorAll("tr");
+        
+        rows.forEach((row, index) => {
+          const rowData = {};
+          const inputs = row.querySelectorAll('input');
+          inputs.forEach(input => {
+            if (input.id) {
+              const fieldName = input.id.replace(/\d+$/, ''); // Remove row number
+              rowData[fieldName] = input.value;
+            }
+          });
+          logData.rows.push(rowData);
+        });
+
+        // Save to localStorage
+        const savedLogs = JSON.parse(localStorage.getItem('vfrNavLogs') || '{}');
+        savedLogs[logName] = logData;
+        localStorage.setItem('vfrNavLogs', JSON.stringify(savedLogs));
+
+        // Clear input and refresh dropdown
+        document.getElementById('saveNameInput').value = '';
+        updateSavedLogsDropdown();
+        
+        alert(`Navigation log "${logName}" saved successfully!`);
+      }
+
+      function loadLog() {
+        const dropdown = document.getElementById('savedLogsDropdown');
+        const selectedLog = dropdown.value;
+        
+        if (!selectedLog) {
+          alert('Please select a log to load.');
+          return;
+        }
+
+        const savedLogs = JSON.parse(localStorage.getItem('vfrNavLogs') || '{}');
+        const logData = savedLogs[selectedLog];
+        
+        if (!logData) {
+          alert('Selected log not found.');
+          return;
+        }
+
+        if (confirm(`Load "${selectedLog}"? This will replace your current navigation log.`)) {
+          // Clear existing rows
+          const tbody = document.getElementById("navlog-body");
+          tbody.innerHTML = '';
+          rowCount = 0;
+
+          // Load basic data
+          document.getElementById('aircraftReg').value = logData.aircraftReg || '';
+          document.getElementById('depCode').value = logData.depCode || '';
+          document.getElementById('arrCode').value = logData.arrCode || '';
+          document.getElementById('notesTextarea').value = logData.notes || '';
+
+          // Trigger airport data fetch if codes exist
+          if (logData.depCode) fetchAirport(logData.depCode, 'dep');
+          if (logData.arrCode) fetchAirport(logData.arrCode, 'arr');
+
+          // Load navigation log rows
+          logData.rows.forEach((rowData, index) => {
+            addRow();
+            
+            // Populate the row with saved data
+            Object.keys(rowData).forEach(fieldName => {
+              const inputId = fieldName + (rowCount - 1);
+              const input = document.getElementById(inputId);
+              if (input) {
+                input.value = rowData[fieldName];
+              }
+            });
+            
+            // Recalculate the row
+            calculateRow(rowCount - 1);
+          });
+
+          alert(`Navigation log "${selectedLog}" loaded successfully!`);
+        }
+      }
+
+      function deleteLog() {
+        const dropdown = document.getElementById('savedLogsDropdown');
+        const selectedLog = dropdown.value;
+        
+        if (!selectedLog) {
+          alert('Please select a log to delete.');
+          return;
+        }
+
+        if (confirm(`Are you sure you want to delete "${selectedLog}"? This cannot be undone.`)) {
+          const savedLogs = JSON.parse(localStorage.getItem('vfrNavLogs') || '{}');
+          delete savedLogs[selectedLog];
+          localStorage.setItem('vfrNavLogs', JSON.stringify(savedLogs));
+          
+          updateSavedLogsDropdown();
+          alert(`Navigation log "${selectedLog}" deleted successfully.`);
+        }
+      }
+
+      function updateSavedLogsDropdown() {
+        const dropdown = document.getElementById('savedLogsDropdown');
+        const savedLogs = JSON.parse(localStorage.getItem('vfrNavLogs') || '{}');
+        
+        // Clear existing options except the first one
+        dropdown.innerHTML = '<option value="">Select saved log...</option>';
+        
+        // Add saved logs to dropdown
+        Object.keys(savedLogs).sort().forEach(logName => {
+          const option = document.createElement('option');
+          option.value = logName;
+          option.textContent = `${logName} (${new Date(savedLogs[logName].savedAt).toLocaleDateString()})`;
+          dropdown.appendChild(option);
+        });
+        
+        updateLoadButton();
+      }
+
+      function updateLoadButton() {
+        const dropdown = document.getElementById('savedLogsDropdown');
+        const loadButton = document.getElementById('loadButton');
+        const deleteButton = document.getElementById('deleteButton');
+        const hasSelection = dropdown.value !== '';
+        
+        loadButton.disabled = !hasSelection;
+        deleteButton.disabled = !hasSelection;
+      }
+
       // Add default row on load
       addRow();
+      
+      // Initialize saved logs dropdown on page load
+      updateSavedLogsDropdown();
 
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
