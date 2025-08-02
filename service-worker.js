@@ -4,43 +4,46 @@ const urlsToCache = [
   './',
   './index.html',
   './manifest.json',
-  './service-worker.js',
   './icon-192.png',
   './icon-512.png'
 ];
 
-// Install app shell
+// Install static assets
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
   );
 });
 
-// Handle fetches
+// Activate immediately
+self.addEventListener('activate', (event) => {
+  event.waitUntil(clients.claim());
+});
+
+// Fetch handler
 self.addEventListener('fetch', (event) => {
   const request = event.request;
   const url = new URL(request.url);
 
-  // 🛩️ Network-first, fallback-to-cache for airportdb.io
+  // ✅ Special handling for airportdb.io
   if (url.hostname === 'airportdb.io' && request.method === 'GET') {
     event.respondWith(
       fetch(request)
-        .then((liveResponse) => {
-          // Save to cache if OK
-          if (liveResponse.status === 200) {
+        .then((networkResponse) => {
+          if (networkResponse.ok) {
+            const clonedResponse = networkResponse.clone();
             caches.open(API_CACHE).then((cache) => {
-              cache.put(request, liveResponse.clone());
+              cache.put(request, clonedResponse);
             });
           }
-          return liveResponse;
+          return networkResponse;
         })
         .catch(() => {
-          // Fallback to cache if offline
+          // Offline fallback
           return caches.open(API_CACHE).then((cache) => {
             return cache.match(request).then((cachedResponse) => {
-              return cachedResponse || new Response(JSON.stringify({ error: "Offline and not cached" }), {
+              return cachedResponse || new Response(JSON.stringify({ error: 'Offline and not cached' }), {
                 status: 503,
                 headers: { 'Content-Type': 'application/json' }
               });
@@ -51,10 +54,8 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 🌐 For everything else: static files = cache-first
+  // ✅ Everything else: cache-first
   event.respondWith(
-    caches.match(request).then((cached) => {
-      return cached || fetch(request);
-    })
+    caches.match(request).then((cached) => cached || fetch(request))
   );
 });
