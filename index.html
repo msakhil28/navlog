@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <title>VFR Nav Log + Airport Frequencies</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" href="icon-192.png" />
     <meta name="theme-color" content="#161b22" />
@@ -398,7 +401,7 @@
           detailDiv.innerHTML = "";
           return;
         }
-        const url = `https://airportdb.io/api/v1/airport/${code}`;
+        const url = `https://airportdb.io/api/v1/airport/${code}?apiToken=1cdf6a463718d686c9d1e1698dfe1ae526f70feedd374b90759b2d74f31128fcf1de8889a0467a3e91855272e13a2477`;
         try {
           const resp = await fetch(url);
           if (!resp.ok) throw new Error("Not found");
