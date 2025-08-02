@@ -231,6 +231,71 @@
         font-family: inherit;
       }
 
+      /* Altitude Calculator Sections */
+      .altitude-calculators {
+        margin-top: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+
+      .calc-block {
+        flex: 1 1 400px;
+        min-width: 350px;
+        background-color: var(--bs-table-bg);
+        padding: 20px;
+        border-radius: 0.5rem;
+        border: 1px solid var(--bs-border-color);
+        box-shadow: 0 0 8px rgba(88, 166, 255, 0.2);
+      }
+
+      .calc-input-group {
+        margin-bottom: 1rem;
+      }
+
+      .calc-input-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--bs-primary);
+      }
+
+      .calc-input-group input {
+        background-color: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+        color: var(--bs-body-color);
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 16px;
+        border-radius: 0.375rem;
+        box-sizing: border-box;
+      }
+
+      .calc-input-group input:focus {
+        border-color: var(--bs-primary);
+        box-shadow: 0 0 0 0.2rem rgba(88, 166, 255, 0.25);
+        outline: none;
+      }
+
+      .result-display {
+        background-color: var(--bs-primary);
+        color: white;
+        padding: 15px;
+        border-radius: 0.375rem;
+        text-align: center;
+        margin-top: 1rem;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      .calc-info {
+        font-size: 0.9rem;
+        color: var(--bs-body-color);
+        opacity: 0.8;
+        margin-top: 1rem;
+        line-height: 1.4;
+      }
+
       label {
         font-weight: 600;
         display: block;
@@ -253,50 +318,130 @@
       }
 
       /* Specific column min-widths for mobile devices */
-      #navlog th:nth-child(1), #navlog td:nth-child(1) { min-width: 50px; } /* CP */
-      #navlog th:nth-child(2), #navlog td:nth-child(2) { min-width: 65px; } /* VOR Ident */
-      #navlog th:nth-child(3), #navlog td:nth-child(3) { min-width: 70px; } /* VOR Freq */
-      #navlog th:nth-child(4), #navlog td:nth-child(4) { min-width: 60px; } /* Course */
-      #navlog th:nth-child(5), #navlog td:nth-child(5) { min-width: 65px; } /* Wind Dir */
-      #navlog th:nth-child(6), #navlog td:nth-child(6) { min-width: 65px; } /* Wind Vel */
-      #navlog th:nth-child(7), #navlog td:nth-child(7) { min-width: 55px; } /* TAS */
-      #navlog th:nth-child(8), #navlog td:nth-child(8) { min-width: 70px; } /* Altitude */
-      #navlog th:nth-child(9), #navlog td:nth-child(9) { min-width: 45px; } /* TC */
-      #navlog th:nth-child(10), #navlog td:nth-child(10) { min-width: 50px; } /* WCA */
-      #navlog th:nth-child(11), #navlog td:nth-child(11) { min-width: 45px; } /* TH */
-      #navlog th:nth-child(12), #navlog td:nth-child(12) { min-width: 45px; } /* Var */
-      #navlog th:nth-child(13), #navlog td:nth-child(13) { min-width: 45px; } /* MH */
-      #navlog th:nth-child(14), #navlog td:nth-child(14) { min-width: 50px; } /* Dist */
-      #navlog th:nth-child(15), #navlog td:nth-child(15) { min-width: 45px; } /* GS */
-      #navlog th:nth-child(16), #navlog td:nth-child(16) { min-width: 55px; } /* ETE */
-      #navlog th:nth-child(17), #navlog td:nth-child(17) { min-width: 50px; } /* GPH */
-      #navlog th:nth-child(18), #navlog td:nth-child(18) { min-width: 55px; } /* Fuel */
-      #navlog th:nth-child(19), #navlog td:nth-child(19) { min-width: 40px; } /* Delete */
+      #navlog th:nth-child(1),
+      #navlog td:nth-child(1) {
+        min-width: 50px;
+      } /* CP */
+      #navlog th:nth-child(2),
+      #navlog td:nth-child(2) {
+        min-width: 65px;
+      } /* VOR Ident */
+      #navlog th:nth-child(3),
+      #navlog td:nth-child(3) {
+        min-width: 70px;
+      } /* VOR Freq */
+      #navlog th:nth-child(4),
+      #navlog td:nth-child(4) {
+        min-width: 60px;
+      } /* Course */
+      #navlog th:nth-child(5),
+      #navlog td:nth-child(5) {
+        min-width: 65px;
+      } /* Wind Dir */
+      #navlog th:nth-child(6),
+      #navlog td:nth-child(6) {
+        min-width: 65px;
+      } /* Wind Vel */
+      #navlog th:nth-child(7),
+      #navlog td:nth-child(7) {
+        min-width: 55px;
+      } /* TAS */
+      #navlog th:nth-child(8),
+      #navlog td:nth-child(8) {
+        min-width: 70px;
+      } /* Altitude */
+      #navlog th:nth-child(9),
+      #navlog td:nth-child(9) {
+        min-width: 45px;
+      } /* TC */
+      #navlog th:nth-child(10),
+      #navlog td:nth-child(10) {
+        min-width: 50px;
+      } /* WCA */
+      #navlog th:nth-child(11),
+      #navlog td:nth-child(11) {
+        min-width: 45px;
+      } /* TH */
+      #navlog th:nth-child(12),
+      #navlog td:nth-child(12) {
+        min-width: 45px;
+      } /* Var */
+      #navlog th:nth-child(13),
+      #navlog td:nth-child(13) {
+        min-width: 45px;
+      } /* MH */
+      #navlog th:nth-child(14),
+      #navlog td:nth-child(14) {
+        min-width: 50px;
+      } /* Dist */
+      #navlog th:nth-child(15),
+      #navlog td:nth-child(15) {
+        min-width: 45px;
+      } /* GS */
+      #navlog th:nth-child(16),
+      #navlog td:nth-child(16) {
+        min-width: 55px;
+      } /* ETE */
+      #navlog th:nth-child(17),
+      #navlog td:nth-child(17) {
+        min-width: 50px;
+      } /* GPH */
+      #navlog th:nth-child(18),
+      #navlog td:nth-child(18) {
+        min-width: 55px;
+      } /* Fuel */
+      #navlog th:nth-child(19),
+      #navlog td:nth-child(19) {
+        min-width: 40px;
+      } /* Delete */
 
       /* Mobile specific adjustments */
       @media (max-width: 768px) {
         #navlog {
           font-size: 12px;
         }
-        
+
         #navlog th,
         #navlog td {
           padding: 4px 2px;
           font-size: 11px;
         }
-        
+
         #navlog input {
           font-size: 12px;
           padding: 2px 4px;
           min-width: 45px;
         }
-        
+
         /* Smaller columns on mobile while maintaining readability */
-        #navlog th:nth-child(9), #navlog td:nth-child(9) { min-width: 40px; } /* TC */
-        #navlog th:nth-child(11), #navlog td:nth-child(11) { min-width: 40px; } /* TH */
-        #navlog th:nth-child(12), #navlog td:nth-child(12) { min-width: 40px; } /* Var */
-        #navlog th:nth-child(13), #navlog td:nth-child(13) { min-width: 40px; } /* MH */
-        #navlog th:nth-child(15), #navlog td:nth-child(15) { min-width: 40px; } /* GS */
+        #navlog th:nth-child(9),
+        #navlog td:nth-child(9) {
+          min-width: 40px;
+        } /* TC */
+        #navlog th:nth-child(11),
+        #navlog td:nth-child(11) {
+          min-width: 40px;
+        } /* TH */
+        #navlog th:nth-child(12),
+        #navlog td:nth-child(12) {
+          min-width: 40px;
+        } /* Var */
+        #navlog th:nth-child(13),
+        #navlog td:nth-child(13) {
+          min-width: 40px;
+        } /* MH */
+        #navlog th:nth-child(15),
+        #navlog td:nth-child(15) {
+          min-width: 40px;
+        } /* GS */
+
+        .altitude-calculators {
+          flex-direction: column;
+        }
+
+        .calc-block {
+          min-width: 100%;
+        }
       }
 
       /* Wider inputs for frequency inputs */
@@ -343,36 +488,37 @@
           size: landscape;
           margin: 0.5in;
         }
-        
+
         body {
           background-color: white !important;
           color: black !important;
           padding: 5px;
           font-size: 12px;
         }
-        
+
         .container-fluid {
           padding: 0 !important;
         }
-        
+
         .theme-toggle,
         .btn,
         button,
-        .save-load-section {
+        .save-load-section,
+        .altitude-calculators {
           display: none !important;
         }
-        
+
         /* Make table fit better */
         .table-responsive {
           overflow: visible !important;
         }
-        
+
         #navlog {
           width: 100% !important;
           font-size: 10px !important;
           table-layout: fixed;
         }
-        
+
         #navlog th,
         #navlog td {
           padding: 2px 4px !important;
@@ -380,33 +526,90 @@
           word-wrap: break-word;
           overflow: hidden;
         }
-        
+
         /* Adjust column widths for print */
-        #navlog th:nth-child(1), #navlog td:nth-child(1) { width: 5%; } /* CP */
-        #navlog th:nth-child(2), #navlog td:nth-child(2) { width: 5%; } /* VOR Ident */
-        #navlog th:nth-child(3), #navlog td:nth-child(3) { width: 5%; } /* VOR Freq */
-        #navlog th:nth-child(4), #navlog td:nth-child(4) { width: 5%; } /* Course */
-        #navlog th:nth-child(5), #navlog td:nth-child(5) { width: 5%; } /* Wind Dir */
-        #navlog th:nth-child(6), #navlog td:nth-child(6) { width: 5%; } /* Wind Vel */
-        #navlog th:nth-child(7), #navlog td:nth-child(7) { width: 5%; } /* TAS */
-        #navlog th:nth-child(8), #navlog td:nth-child(8) { width: 6%; } /* Altitude */
-        #navlog th:nth-child(9), #navlog td:nth-child(9) { width: 4%; } /* TC */
-        #navlog th:nth-child(10), #navlog td:nth-child(10) { width: 4%; } /* WCA */
-        #navlog th:nth-child(11), #navlog td:nth-child(11) { width: 4%; } /* TH */
-        #navlog th:nth-child(12), #navlog td:nth-child(12) { width: 4%; } /* Var */
-        #navlog th:nth-child(13), #navlog td:nth-child(13) { width: 4%; } /* MH */
-        #navlog th:nth-child(14), #navlog td:nth-child(14) { width: 5%; } /* Dist */
-        #navlog th:nth-child(15), #navlog td:nth-child(15) { width: 5%; } /* GS */
-        #navlog th:nth-child(16), #navlog td:nth-child(16) { width: 6%; } /* ETE */
-        #navlog th:nth-child(17), #navlog td:nth-child(17) { width: 4%; } /* GPH */
-        #navlog th:nth-child(18), #navlog td:nth-child(18) { width: 6%; } /* Fuel */
-        #navlog th:nth-child(19), #navlog td:nth-child(19) { display: none; } /* Delete button */
-        
+        #navlog th:nth-child(1),
+        #navlog td:nth-child(1) {
+          width: 5%;
+        } /* CP */
+        #navlog th:nth-child(2),
+        #navlog td:nth-child(2) {
+          width: 5%;
+        } /* VOR Ident */
+        #navlog th:nth-child(3),
+        #navlog td:nth-child(3) {
+          width: 5%;
+        } /* VOR Freq */
+        #navlog th:nth-child(4),
+        #navlog td:nth-child(4) {
+          width: 5%;
+        } /* Course */
+        #navlog th:nth-child(5),
+        #navlog td:nth-child(5) {
+          width: 5%;
+        } /* Wind Dir */
+        #navlog th:nth-child(6),
+        #navlog td:nth-child(6) {
+          width: 5%;
+        } /* Wind Vel */
+        #navlog th:nth-child(7),
+        #navlog td:nth-child(7) {
+          width: 5%;
+        } /* TAS */
+        #navlog th:nth-child(8),
+        #navlog td:nth-child(8) {
+          width: 6%;
+        } /* Altitude */
+        #navlog th:nth-child(9),
+        #navlog td:nth-child(9) {
+          width: 4%;
+        } /* TC */
+        #navlog th:nth-child(10),
+        #navlog td:nth-child(10) {
+          width: 4%;
+        } /* WCA */
+        #navlog th:nth-child(11),
+        #navlog td:nth-child(11) {
+          width: 4%;
+        } /* TH */
+        #navlog th:nth-child(12),
+        #navlog td:nth-child(12) {
+          width: 4%;
+        } /* Var */
+        #navlog th:nth-child(13),
+        #navlog td:nth-child(13) {
+          width: 4%;
+        } /* MH */
+        #navlog th:nth-child(14),
+        #navlog td:nth-child(14) {
+          width: 5%;
+        } /* Dist */
+        #navlog th:nth-child(15),
+        #navlog td:nth-child(15) {
+          width: 5%;
+        } /* GS */
+        #navlog th:nth-child(16),
+        #navlog td:nth-child(16) {
+          width: 6%;
+        } /* ETE */
+        #navlog th:nth-child(17),
+        #navlog td:nth-child(17) {
+          width: 4%;
+        } /* GPH */
+        #navlog th:nth-child(18),
+        #navlog td:nth-child(18) {
+          width: 6%;
+        } /* Fuel */
+        #navlog th:nth-child(19),
+        #navlog td:nth-child(19) {
+          display: none;
+        } /* Delete button */
+
         .freq-section {
           display: block !important;
           page-break-before: always;
         }
-        
+
         .freq-block {
           box-shadow: none;
           border: 1px solid #ccc;
@@ -416,32 +619,34 @@
           width: 48%;
           vertical-align: top;
         }
-        
+
         .notes-section {
           box-shadow: none;
           border: 1px solid #ccc;
           break-inside: avoid;
           page-break-before: always;
         }
-        
-        table, th, td {
+
+        table,
+        th,
+        td {
           border: 1px solid #000 !important;
           color: black !important;
         }
-        
+
         thead {
           background-color: #f0f0f0 !important;
         }
-        
+
         .total-row {
           background-color: #e0e0e0 !important;
           color: black !important;
         }
-        
+
         .total-row td {
           color: black !important;
         }
-        
+
         input {
           border: none !important;
           background: transparent !important;
@@ -452,24 +657,25 @@
           width: 100% !important;
           text-align: center;
         }
-        
+
         textarea {
           border: 1px solid #ccc !important;
           background: white !important;
           color: black !important;
           font-size: 10px !important;
         }
-        
-        h2, h3 {
+
+        h2,
+        h3 {
           color: black !important;
           font-size: 14px !important;
           margin: 10px 0 5px 0;
         }
-        
+
         .aircraft-reg {
           margin-bottom: 10px;
         }
-        
+
         .aircraft-reg input {
           border: 1px solid #ccc !important;
           background: white !important;
@@ -492,7 +698,11 @@
     <div class="container-fluid p-0">
       <div class="header">
         <h2>VFR Navigation Log</h2>
-        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+        <button
+          class="theme-toggle"
+          onclick="toggleTheme()"
+          aria-label="Toggle dark/light mode"
+        >
           <span id="theme-icon">☀️</span>
         </button>
       </div>
@@ -500,10 +710,10 @@
       <!-- Aircraft Registration -->
       <div class="aircraft-reg">
         <label for="aircraftReg">Aircraft Registration:</label>
-        <input 
-          id="aircraftReg" 
-          type="text" 
-          placeholder="N12345" 
+        <input
+          id="aircraftReg"
+          type="text"
+          placeholder="N12345"
           maxlength="10"
           autocomplete="off"
           autocorrect="off"
@@ -520,7 +730,7 @@
       >
         Add Row
       </button>
-      
+
       <button
         type="button"
         class="btn btn-secondary mb-3 print-btn"
@@ -533,13 +743,18 @@
       <!-- Save/Load Section -->
       <div class="save-load-section mb-3">
         <div class="d-flex flex-wrap gap-2 align-items-center">
-          <input 
-            id="saveNameInput" 
-            type="text" 
-            placeholder="Enter log name..." 
+          <input
+            id="saveNameInput"
+            type="text"
+            placeholder="Enter log name..."
             maxlength="50"
             class="form-control"
-            style="width: 200px; background-color: var(--bs-table-bg); border: 1px solid var(--bs-border-color); color: var(--bs-body-color);"
+            style="
+              width: 200px;
+              background-color: var(--bs-table-bg);
+              border: 1px solid var(--bs-border-color);
+              color: var(--bs-body-color);
+            "
           />
           <button
             type="button"
@@ -549,10 +764,15 @@
           >
             💾 Save Log
           </button>
-          <select 
-            id="savedLogsDropdown" 
+          <select
+            id="savedLogsDropdown"
             class="form-select"
-            style="width: 250px; background-color: var(--bs-table-bg); border: 1px solid var(--bs-border-color); color: var(--bs-body-color);"
+            style="
+              width: 250px;
+              background-color: var(--bs-table-bg);
+              border: 1px solid var(--bs-border-color);
+              color: var(--bs-body-color);
+            "
             onchange="updateLoadButton()"
           >
             <option value="">Select saved log...</option>
@@ -735,18 +955,97 @@
       <!-- Notes & NOTAMs Section -->
       <div class="notes-section">
         <h3>Notes & NOTAMs</h3>
-        <label for="notesTextarea">Flight planning notes, NOTAMs, and other important information:</label>
-        <textarea 
-          id="notesTextarea" 
+        <label for="notesTextarea"
+          >Flight planning notes, NOTAMs, and other important
+          information:</label
+        >
+        <textarea
+          id="notesTextarea"
           placeholder="Enter your flight planning notes, NOTAMs, weather briefing details, alternate airports, fuel stops, special procedures, etc..."
           aria-label="Notes and NOTAMs textarea"
         ></textarea>
+      </div>
+
+      <!-- Altitude Calculators Section -->
+      <h2>Aviation Altitude Calculators</h2>
+      <div class="altitude-calculators">
+        <!-- Pressure Altitude Calculator -->
+        <div class="calc-block">
+          <h3>🛩️ Pressure Altitude Calculator</h3>
+          <div class="calc-input-group">
+            <label for="fieldElevation">Field Elevation (ft MSL):</label>
+            <input
+              type="number"
+              id="fieldElevation"
+              placeholder="e.g. 1250"
+              oninput="calculatePressureAltitude()"
+            />
+          </div>
+          <div class="calc-input-group">
+            <label for="altimeterSetting">Altimeter Setting (inHg):</label>
+            <input
+              type="number"
+              id="altimeterSetting"
+              placeholder="e.g. 29.92"
+              step="0.01"
+              oninput="calculatePressureAltitude()"
+            />
+          </div>
+          <div class="result-display" id="pressureAltitudeResult">
+            Enter values to calculate pressure altitude
+          </div>
+          <div class="calc-info">
+            <strong>Pressure Altitude</strong> is the altitude read from an
+            altimeter when the altimeter setting is adjusted to standard sea
+            level pressure (29.92 inHg). Used for performance calculations and
+            flight level operations above 18,000 ft. <br /><br />
+            <strong>Formula:</strong> Pressure Altitude = Field Elevation +
+            [(29.92 - Altimeter Setting) × 1,000]
+          </div>
+        </div>
+
+        <!-- Density Altitude Calculator -->
+        <div class="calc-block">
+          <h3>🌡️ Density Altitude Calculator</h3>
+          <div class="calc-input-group">
+            <label for="pressureAltInput">Pressure Altitude (ft):</label>
+            <input
+              type="number"
+              id="pressureAltInput"
+              placeholder="e.g. 1500"
+              oninput="calculateDensityAltitude()"
+            />
+          </div>
+          <div class="calc-input-group">
+            <label for="outsideAirTemp">Outside Air Temperature (°F):</label>
+            <input
+              type="number"
+              id="outsideAirTemp"
+              placeholder="e.g. 85"
+              oninput="calculateDensityAltitude()"
+            />
+          </div>
+          <div class="result-display" id="densityAltitudeResult">
+            Enter values to calculate density altitude
+          </div>
+          <div class="calc-info">
+            <strong>Density Altitude</strong> is pressure altitude corrected for
+            temperature variations from standard. High density altitude
+            significantly reduces aircraft performance - takeoff distance, climb
+            rate, and service ceiling all decrease. <br /><br />
+            <strong>Standard Temperature:</strong> 59°F (15°C) at sea level,
+            decreasing 2°F per 1,000 ft
+            <br />
+            <strong>Rule of Thumb:</strong> For every 10°F above standard temp,
+            add ~600 ft to pressure altitude
+          </div>
+        </div>
       </div>
     </div>
 
     <script>
       let rowCount = 0;
-      let currentTheme = 'dark';
+      let currentTheme = "dark";
 
       function degToRad(d) {
         return (d * Math.PI) / 180;
@@ -758,21 +1057,117 @@
 
       function toggleTheme() {
         const body = document.body;
-        const icon = document.getElementById('theme-icon');
-        
-        if (currentTheme === 'dark') {
-          body.setAttribute('data-theme', 'light');
-          icon.textContent = '🌙';
-          currentTheme = 'light';
+        const icon = document.getElementById("theme-icon");
+
+        if (currentTheme === "dark") {
+          body.setAttribute("data-theme", "light");
+          icon.textContent = "🌙";
+          currentTheme = "light";
         } else {
-          body.removeAttribute('data-theme');
-          icon.textContent = '☀️';
-          currentTheme = 'dark';
+          body.removeAttribute("data-theme");
+          icon.textContent = "☀️";
+          currentTheme = "dark";
         }
       }
 
       function printPage() {
         window.print();
+      }
+
+      // Altitude Calculator Functions
+      function calculatePressureAltitude() {
+        const fieldElevation =
+          parseFloat(document.getElementById("fieldElevation").value) || 0;
+        const altimeterSetting =
+          parseFloat(document.getElementById("altimeterSetting").value) || 0;
+        const resultDiv = document.getElementById("pressureAltitudeResult");
+
+        if (fieldElevation === 0 && altimeterSetting === 0) {
+          resultDiv.textContent = "Enter values to calculate pressure altitude";
+          return;
+        }
+
+        if (altimeterSetting < 25.0 || altimeterSetting > 35.0) {
+          resultDiv.textContent =
+            "Please enter a valid altimeter setting (25.00 - 35.00 inHg)";
+          return;
+        }
+
+        // Formula: PA = Field Elevation + [(29.92 - Altimeter Setting) × 1000]
+        const pressureAltitude =
+          fieldElevation + (29.92 - altimeterSetting) * 1000;
+
+        resultDiv.innerHTML = `
+          <div>Pressure Altitude: <strong>${Math.round(
+            pressureAltitude
+          )} ft</strong></div>
+          <div style="font-size: 0.9em; margin-top: 5px;">
+            ${
+              pressureAltitude > fieldElevation
+                ? `${Math.round(
+                    pressureAltitude - fieldElevation
+                  )} ft above field elevation`
+                : `${Math.round(
+                    fieldElevation - pressureAltitude
+                  )} ft below field elevation`
+            }
+          </div>
+        `;
+
+        // Auto-populate density altitude calculator
+        document.getElementById("pressureAltInput").value =
+          Math.round(pressureAltitude);
+        calculateDensityAltitude();
+      }
+
+      function calculateDensityAltitude() {
+        const pressureAltitude =
+          parseFloat(document.getElementById("pressureAltInput").value) || 0;
+        const oat = parseFloat(document.getElementById("outsideAirTemp").value);
+        const resultDiv = document.getElementById("densityAltitudeResult");
+
+        if (pressureAltitude === 0 && isNaN(oat)) {
+          resultDiv.textContent = "Enter values to calculate density altitude";
+          return;
+        }
+
+        if (isNaN(oat)) {
+          resultDiv.textContent = "Please enter outside air temperature";
+          return;
+        }
+
+        // Standard temperature at pressure altitude (59°F at sea level, -2°F per 1000 ft)
+        const standardTemp = 59 - (pressureAltitude / 1000) * 2;
+        const tempDeviation = oat - standardTemp;
+
+        // Density altitude approximation: DA = PA + (120 × temp deviation)
+        const densityAltitude = pressureAltitude + 120 * tempDeviation;
+
+        let performanceNote = "";
+        const altitudeDifference = densityAltitude - pressureAltitude;
+
+        if (altitudeDifference > 1000) {
+          performanceNote =
+            '<div style="color: #ff6b6b; font-weight: bold; margin-top: 8px;">⚠️ High density altitude - significantly reduced performance</div>';
+        } else if (altitudeDifference > 500) {
+          performanceNote =
+            '<div style="color: #ffa726; font-weight: bold; margin-top: 8px;">⚠️ Elevated density altitude - reduced performance</div>';
+        } else if (altitudeDifference < -500) {
+          performanceNote =
+            '<div style="color: #4caf50; font-weight: bold; margin-top: 8px;">✓ Low density altitude - improved performance</div>';
+        }
+
+        resultDiv.innerHTML = `
+          <div>Density Altitude: <strong>${Math.round(
+            densityAltitude
+          )} ft</strong></div>
+          <div style="font-size: 0.9em; margin-top: 5px;">
+            Standard temp: ${Math.round(standardTemp)}°F | Deviation: ${
+          tempDeviation >= 0 ? "+" : ""
+        }${Math.round(tempDeviation)}°F
+          </div>
+          ${performanceNote}
+        `;
       }
 
       function addRow() {
@@ -847,14 +1242,14 @@
         document.getElementById(`gs${i}`).value = gs.toFixed(1);
         document.getElementById(`ete${i}`).value = eteFmt;
         document.getElementById(`fuel${i}`).value = fuel.toFixed(1);
-        
+
         updateTotals();
       }
 
       function updateTotals() {
         const tbody = document.getElementById("navlog-body");
         const rows = tbody.querySelectorAll("tr");
-        
+
         let totalGS = 0;
         let totalETEMinutes = 0;
         let totalFuel = 0;
@@ -864,22 +1259,22 @@
           const gsInput = row.querySelector('input[id^="gs"]');
           const eteInput = row.querySelector('input[id^="ete"]');
           const fuelInput = row.querySelector('input[id^="fuel"]');
-          
+
           if (gsInput && eteInput && fuelInput) {
             const gs = parseFloat(gsInput.value) || 0;
             const fuel = parseFloat(fuelInput.value) || 0;
             const eteStr = eteInput.value;
-            
+
             if (gs > 0) {
               totalGS += gs;
               validRows++;
             }
-            
-            if (eteStr && eteStr.includes(':')) {
-              const [hours, minutes] = eteStr.split(':').map(Number);
-              totalETEMinutes += (hours * 60) + minutes;
+
+            if (eteStr && eteStr.includes(":")) {
+              const [hours, minutes] = eteStr.split(":").map(Number);
+              totalETEMinutes += hours * 60 + minutes;
             }
-            
+
             if (fuel > 0) {
               totalFuel += fuel;
             }
@@ -887,15 +1282,24 @@
         });
 
         // Update totals display
-        const avgGS = validRows > 0 ? (totalGS / validRows).toFixed(1) : '-';
+        const avgGS = validRows > 0 ? (totalGS / validRows).toFixed(1) : "-";
         const totalHours = Math.floor(totalETEMinutes / 60);
         const remainingMinutes = totalETEMinutes % 60;
-        const totalETEFormatted = totalETEMinutes > 0 ? `${totalHours}:${remainingMinutes.toString().padStart(2, '0')}` : '-';
-        const totalFuelFormatted = totalFuel > 0 ? totalFuel.toFixed(1) : '-';
+        const totalETEFormatted =
+          totalETEMinutes > 0
+            ? `${totalHours}:${remainingMinutes.toString().padStart(2, "0")}`
+            : "-";
+        const totalFuelFormatted = totalFuel > 0 ? totalFuel.toFixed(1) : "-";
 
-        document.getElementById('total-gs').innerHTML = `<strong>${avgGS}</strong>`;
-        document.getElementById('total-ete').innerHTML = `<strong>${totalETEFormatted}</strong>`;
-        document.getElementById('total-fuel').innerHTML = `<strong>${totalFuelFormatted}</strong>`;
+        document.getElementById(
+          "total-gs"
+        ).innerHTML = `<strong>${avgGS}</strong>`;
+        document.getElementById(
+          "total-ete"
+        ).innerHTML = `<strong>${totalETEFormatted}</strong>`;
+        document.getElementById(
+          "total-fuel"
+        ).innerHTML = `<strong>${totalFuelFormatted}</strong>`;
       }
 
       async function fetchAirport(code, type) {
@@ -934,6 +1338,12 @@
             <p><strong>Available Runways:</strong><br>${runways || "N/A"}</p>
           `;
 
+          // Auto-populate field elevation in pressure altitude calculator if it's the departure airport
+          if (type === "dep" && data.elevation_ft) {
+            document.getElementById("fieldElevation").value = data.elevation_ft;
+            calculatePressureAltitude();
+          }
+
           const freqs =
             data.freqs || data.frequencies || data.communication || data.comms;
           if (!Array.isArray(freqs) || !freqs.length) {
@@ -958,95 +1368,99 @@
 
       // Save/Load functionality
       function saveLog() {
-        const logName = document.getElementById('saveNameInput').value.trim();
+        const logName = document.getElementById("saveNameInput").value.trim();
         if (!logName) {
-          alert('Please enter a name for your navigation log.');
+          alert("Please enter a name for your navigation log.");
           return;
         }
 
         const logData = {
-          aircraftReg: document.getElementById('aircraftReg').value,
-          depCode: document.getElementById('depCode').value,
-          arrCode: document.getElementById('arrCode').value,
-          notes: document.getElementById('notesTextarea').value,
+          aircraftReg: document.getElementById("aircraftReg").value,
+          depCode: document.getElementById("depCode").value,
+          arrCode: document.getElementById("arrCode").value,
+          notes: document.getElementById("notesTextarea").value,
           rows: [],
-          savedAt: new Date().toISOString()
+          savedAt: new Date().toISOString(),
         };
 
         // Save all navigation log rows
         const tbody = document.getElementById("navlog-body");
         const rows = tbody.querySelectorAll("tr");
-        
+
         rows.forEach((row, index) => {
           const rowData = {};
-          const inputs = row.querySelectorAll('input');
-          inputs.forEach(input => {
+          const inputs = row.querySelectorAll("input");
+          inputs.forEach((input) => {
             if (input.id) {
-              const fieldName = input.id.replace(/\d+$/, ''); // Remove row number
+              const fieldName = input.id.replace(/\d+$/, ""); // Remove row number
               rowData[fieldName] = input.value;
             }
           });
           logData.rows.push(rowData);
         });
 
-        // Save to localStorage
-        const savedLogs = JSON.parse(localStorage.getItem('vfrNavLogs') || '{}');
-        savedLogs[logName] = logData;
-        localStorage.setItem('vfrNavLogs', JSON.stringify(savedLogs));
+        // Save to memory (not localStorage due to artifact restrictions)
+        if (!window.savedLogs) window.savedLogs = {};
+        window.savedLogs[logName] = logData;
 
         // Clear input and refresh dropdown
-        document.getElementById('saveNameInput').value = '';
+        document.getElementById("saveNameInput").value = "";
         updateSavedLogsDropdown();
-        
+
         alert(`Navigation log "${logName}" saved successfully!`);
       }
 
       function loadLog() {
-        const dropdown = document.getElementById('savedLogsDropdown');
+        const dropdown = document.getElementById("savedLogsDropdown");
         const selectedLog = dropdown.value;
-        
+
         if (!selectedLog) {
-          alert('Please select a log to load.');
+          alert("Please select a log to load.");
           return;
         }
 
-        const savedLogs = JSON.parse(localStorage.getItem('vfrNavLogs') || '{}');
+        const savedLogs = window.savedLogs || {};
         const logData = savedLogs[selectedLog];
-        
+
         if (!logData) {
-          alert('Selected log not found.');
+          alert("Selected log not found.");
           return;
         }
 
-        if (confirm(`Load "${selectedLog}"? This will replace your current navigation log.`)) {
+        if (
+          confirm(
+            `Load "${selectedLog}"? This will replace your current navigation log.`
+          )
+        ) {
           // Clear existing rows
           const tbody = document.getElementById("navlog-body");
-          tbody.innerHTML = '';
+          tbody.innerHTML = "";
           rowCount = 0;
 
           // Load basic data
-          document.getElementById('aircraftReg').value = logData.aircraftReg || '';
-          document.getElementById('depCode').value = logData.depCode || '';
-          document.getElementById('arrCode').value = logData.arrCode || '';
-          document.getElementById('notesTextarea').value = logData.notes || '';
+          document.getElementById("aircraftReg").value =
+            logData.aircraftReg || "";
+          document.getElementById("depCode").value = logData.depCode || "";
+          document.getElementById("arrCode").value = logData.arrCode || "";
+          document.getElementById("notesTextarea").value = logData.notes || "";
 
           // Trigger airport data fetch if codes exist
-          if (logData.depCode) fetchAirport(logData.depCode, 'dep');
-          if (logData.arrCode) fetchAirport(logData.arrCode, 'arr');
+          if (logData.depCode) fetchAirport(logData.depCode, "dep");
+          if (logData.arrCode) fetchAirport(logData.arrCode, "arr");
 
           // Load navigation log rows
           logData.rows.forEach((rowData, index) => {
             addRow();
-            
+
             // Populate the row with saved data
-            Object.keys(rowData).forEach(fieldName => {
+            Object.keys(rowData).forEach((fieldName) => {
               const inputId = fieldName + (rowCount - 1);
               const input = document.getElementById(inputId);
               if (input) {
                 input.value = rowData[fieldName];
               }
             });
-            
+
             // Recalculate the row
             calculateRow(rowCount - 1);
           });
@@ -1056,19 +1470,22 @@
       }
 
       function deleteLog() {
-        const dropdown = document.getElementById('savedLogsDropdown');
+        const dropdown = document.getElementById("savedLogsDropdown");
         const selectedLog = dropdown.value;
-        
+
         if (!selectedLog) {
-          alert('Please select a log to delete.');
+          alert("Please select a log to delete.");
           return;
         }
 
-        if (confirm(`Are you sure you want to delete "${selectedLog}"? This cannot be undone.`)) {
-          const savedLogs = JSON.parse(localStorage.getItem('vfrNavLogs') || '{}');
+        if (
+          confirm(
+            `Are you sure you want to delete "${selectedLog}"? This cannot be undone.`
+          )
+        ) {
+          const savedLogs = window.savedLogs || {};
           delete savedLogs[selectedLog];
-          localStorage.setItem('vfrNavLogs', JSON.stringify(savedLogs));
-          
+
           updateSavedLogsDropdown();
           alert(`Navigation log "${selectedLog}" deleted successfully.`);
         }
@@ -1077,13 +1494,19 @@
       function reverseLog() {
         const tbody = document.getElementById("navlog-body");
         const rows = tbody.querySelectorAll("tr");
-        
+
         if (rows.length === 0) {
-          alert('No navigation log data to reverse. Please add some waypoints first.');
+          alert(
+            "No navigation log data to reverse. Please add some waypoints first."
+          );
           return;
         }
 
-        if (!confirm('Reverse the navigation log for return flight? This will swap departure/arrival airports and reverse waypoint order.')) {
+        if (
+          !confirm(
+            "Reverse the navigation log for return flight? This will swap departure/arrival airports and reverse waypoint order."
+          )
+        ) {
           return;
         }
 
@@ -1091,10 +1514,10 @@
         const rowsData = [];
         rows.forEach((row, index) => {
           const rowData = {};
-          const inputs = row.querySelectorAll('input');
-          inputs.forEach(input => {
+          const inputs = row.querySelectorAll("input");
+          inputs.forEach((input) => {
             if (input.id) {
-              const fieldName = input.id.replace(/\d+$/, ''); // Remove row number
+              const fieldName = input.id.replace(/\d+$/, ""); // Remove row number
               rowData[fieldName] = input.value;
             }
           });
@@ -1102,90 +1525,113 @@
         });
 
         // Swap departure and arrival airports
-        const depCode = document.getElementById('depCode').value;
-        const arrCode = document.getElementById('arrCode').value;
-        
-        document.getElementById('depCode').value = arrCode;
-        document.getElementById('arrCode').value = depCode;
-        
+        const depCode = document.getElementById("depCode").value;
+        const arrCode = document.getElementById("arrCode").value;
+
+        document.getElementById("depCode").value = arrCode;
+        document.getElementById("arrCode").value = depCode;
+
         // Trigger airport data fetch for swapped codes
-        if (arrCode) fetchAirport(arrCode, 'dep');
-        if (depCode) fetchAirport(depCode, 'arr');
+        if (arrCode) fetchAirport(arrCode, "dep");
+        if (depCode) fetchAirport(depCode, "arr");
 
         // Clear existing rows
-        tbody.innerHTML = '';
+        tbody.innerHTML = "";
         rowCount = 0;
 
         // Reverse the order and recreate rows
         rowsData.reverse().forEach((rowData, index) => {
           addRow();
           const currentRowIndex = rowCount - 1;
-          
+
           // Populate basic data (non-calculated fields)
-          const fieldsToReverse = ['cp', 'vorIdent', 'vorFreq', 'course', 'windDir', 'windVel', 'tas', 'altitude', 'var', 'dist', 'gph'];
-          
-          fieldsToReverse.forEach(fieldName => {
+          const fieldsToReverse = [
+            "cp",
+            "vorIdent",
+            "vorFreq",
+            "course",
+            "windDir",
+            "windVel",
+            "tas",
+            "altitude",
+            "var",
+            "dist",
+            "gph",
+          ];
+
+          fieldsToReverse.forEach((fieldName) => {
             const inputId = fieldName + currentRowIndex;
             const input = document.getElementById(inputId);
             if (input && rowData[fieldName]) {
-              if (fieldName === 'course') {
+              if (fieldName === "course") {
                 // Reverse the course by adding/subtracting 180 degrees
                 let reverseCourse = parseFloat(rowData[fieldName]) || 0;
-                reverseCourse = reverseCourse >= 180 ? reverseCourse - 180 : reverseCourse + 180;
+                reverseCourse =
+                  reverseCourse >= 180
+                    ? reverseCourse - 180
+                    : reverseCourse + 180;
                 input.value = Math.round(reverseCourse);
                 // Also update TC field
-                const tcInput = document.getElementById('tc' + currentRowIndex);
+                const tcInput = document.getElementById("tc" + currentRowIndex);
                 if (tcInput) tcInput.value = Math.round(reverseCourse);
               } else {
                 input.value = rowData[fieldName];
               }
             }
           });
-          
+
           // Recalculate the row with new values
           calculateRow(currentRowIndex);
         });
 
         // Update notes to indicate this is a reverse log
-        const notesTextarea = document.getElementById('notesTextarea');
+        const notesTextarea = document.getElementById("notesTextarea");
         const currentNotes = notesTextarea.value;
-        const reverseNote = `\n\n--- REVERSE LOG CREATED ${new Date().toLocaleString()} ---\nReturn flight: ${arrCode || '[DEP]'} → ${depCode || '[ARR]'}`;
+        const reverseNote = `\n\n--- REVERSE LOG CREATED ${new Date().toLocaleString()} ---\nReturn flight: ${
+          arrCode || "[DEP]"
+        } → ${depCode || "[ARR]"}`;
         notesTextarea.value = currentNotes + reverseNote;
 
-        alert('Navigation log reversed successfully! Departure and arrival airports have been swapped, waypoints reversed, and courses adjusted by 180°.');
+        alert(
+          "Navigation log reversed successfully! Departure and arrival airports have been swapped, waypoints reversed, and courses adjusted by 180°."
+        );
       }
 
       function updateSavedLogsDropdown() {
-        const dropdown = document.getElementById('savedLogsDropdown');
-        const savedLogs = JSON.parse(localStorage.getItem('vfrNavLogs') || '{}');
-        
+        const dropdown = document.getElementById("savedLogsDropdown");
+        const savedLogs = window.savedLogs || {};
+
         // Clear existing options except the first one
         dropdown.innerHTML = '<option value="">Select saved log...</option>';
-        
+
         // Add saved logs to dropdown
-        Object.keys(savedLogs).sort().forEach(logName => {
-          const option = document.createElement('option');
-          option.value = logName;
-          option.textContent = `${logName} (${new Date(savedLogs[logName].savedAt).toLocaleDateString()})`;
-          dropdown.appendChild(option);
-        });
-        
+        Object.keys(savedLogs)
+          .sort()
+          .forEach((logName) => {
+            const option = document.createElement("option");
+            option.value = logName;
+            option.textContent = `${logName} (${new Date(
+              savedLogs[logName].savedAt
+            ).toLocaleDateString()})`;
+            dropdown.appendChild(option);
+          });
+
         updateLoadButton();
       }
 
       function updateLoadButton() {
-        const dropdown = document.getElementById('savedLogsDropdown');
-        const loadButton = document.getElementById('loadButton');
-        const deleteButton = document.getElementById('deleteButton');
-        const hasSelection = dropdown.value !== '';
-        
+        const dropdown = document.getElementById("savedLogsDropdown");
+        const loadButton = document.getElementById("loadButton");
+        const deleteButton = document.getElementById("deleteButton");
+        const hasSelection = dropdown.value !== "";
+
         loadButton.disabled = !hasSelection;
         deleteButton.disabled = !hasSelection;
       }
 
       // Add default row on load
       addRow();
-      
+
       // Initialize saved logs dropdown on page load
       updateSavedLogsDropdown();
 
