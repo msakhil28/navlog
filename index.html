@@ -248,8 +248,55 @@
       /* Adjust input widths inside nav log table */
       #navlog input[type="text"],
       #navlog input[type="number"] {
-        min-width: 50px;
+        min-width: 60px;
         max-width: 90px;
+      }
+
+      /* Specific column min-widths for mobile devices */
+      #navlog th:nth-child(1), #navlog td:nth-child(1) { min-width: 50px; } /* CP */
+      #navlog th:nth-child(2), #navlog td:nth-child(2) { min-width: 65px; } /* VOR Ident */
+      #navlog th:nth-child(3), #navlog td:nth-child(3) { min-width: 70px; } /* VOR Freq */
+      #navlog th:nth-child(4), #navlog td:nth-child(4) { min-width: 60px; } /* Course */
+      #navlog th:nth-child(5), #navlog td:nth-child(5) { min-width: 65px; } /* Wind Dir */
+      #navlog th:nth-child(6), #navlog td:nth-child(6) { min-width: 65px; } /* Wind Vel */
+      #navlog th:nth-child(7), #navlog td:nth-child(7) { min-width: 55px; } /* TAS */
+      #navlog th:nth-child(8), #navlog td:nth-child(8) { min-width: 70px; } /* Altitude */
+      #navlog th:nth-child(9), #navlog td:nth-child(9) { min-width: 45px; } /* TC */
+      #navlog th:nth-child(10), #navlog td:nth-child(10) { min-width: 50px; } /* WCA */
+      #navlog th:nth-child(11), #navlog td:nth-child(11) { min-width: 45px; } /* TH */
+      #navlog th:nth-child(12), #navlog td:nth-child(12) { min-width: 45px; } /* Var */
+      #navlog th:nth-child(13), #navlog td:nth-child(13) { min-width: 45px; } /* MH */
+      #navlog th:nth-child(14), #navlog td:nth-child(14) { min-width: 50px; } /* Dist */
+      #navlog th:nth-child(15), #navlog td:nth-child(15) { min-width: 45px; } /* GS */
+      #navlog th:nth-child(16), #navlog td:nth-child(16) { min-width: 55px; } /* ETE */
+      #navlog th:nth-child(17), #navlog td:nth-child(17) { min-width: 50px; } /* GPH */
+      #navlog th:nth-child(18), #navlog td:nth-child(18) { min-width: 55px; } /* Fuel */
+      #navlog th:nth-child(19), #navlog td:nth-child(19) { min-width: 40px; } /* Delete */
+
+      /* Mobile specific adjustments */
+      @media (max-width: 768px) {
+        #navlog {
+          font-size: 12px;
+        }
+        
+        #navlog th,
+        #navlog td {
+          padding: 4px 2px;
+          font-size: 11px;
+        }
+        
+        #navlog input {
+          font-size: 12px;
+          padding: 2px 4px;
+          min-width: 45px;
+        }
+        
+        /* Smaller columns on mobile while maintaining readability */
+        #navlog th:nth-child(9), #navlog td:nth-child(9) { min-width: 40px; } /* TC */
+        #navlog th:nth-child(11), #navlog td:nth-child(11) { min-width: 40px; } /* TH */
+        #navlog th:nth-child(12), #navlog td:nth-child(12) { min-width: 40px; } /* Var */
+        #navlog th:nth-child(13), #navlog td:nth-child(13) { min-width: 40px; } /* MH */
+        #navlog th:nth-child(15), #navlog td:nth-child(15) { min-width: 40px; } /* GS */
       }
 
       /* Wider inputs for frequency inputs */
