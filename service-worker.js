@@ -2,7 +2,7 @@ self.addEventListener('fetch', (event) => {
   const request = event.request;
   const url = new URL(request.url);
 
-  // Handle airportdb.io API requests with network-first + cache fallback
+  // ✅ Special handling for airportdb.io - network-first + cache fallback
   if (url.hostname === 'airportdb.io' && request.method === 'GET') {
     event.respondWith(
       fetch(request)
@@ -16,11 +16,17 @@ self.addEventListener('fetch', (event) => {
         .catch(() => {
           return caches.open(API_CACHE).then(cache =>
             cache.match(request).then((cachedResponse) => {
-              if (cachedResponse) return cachedResponse;
-              return new Response(JSON.stringify({ error: 'Offline and not cached' }), {
-                status: 503,
-                headers: { 'Content-Type': 'application/json' }
-              });
+              if (cachedResponse) {
+                return cachedResponse;
+              } else {
+                return new Response(
+                  JSON.stringify({ error: 'Offline and not cached' }),
+                  {
+                    status: 503,
+                    headers: { 'Content-Type': 'application/json' }
+                  }
+                );
+              }
             })
           );
         })
@@ -28,7 +34,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // All other requests (static files): network-first + cache fallback
+  // ✅ For all other requests: network-first + cache fallback
   event.respondWith(
     fetch(request)
       .then(networkResponse => {
@@ -38,6 +44,18 @@ self.addEventListener('fetch', (event) => {
         }
         return networkResponse;
       })
-      .catch(() => caches.match(request))
+      .catch(() =>
+        caches.match(request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          } else {
+            // This avoids unhandled type errors
+            return new Response('Offline and no cached version available.', {
+              status: 504,
+              headers: { 'Content-Type': 'text/plain' }
+            });
+          }
+        })
+      )
   );
 });
