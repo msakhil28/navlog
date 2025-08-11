@@ -80,11 +80,11 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // All other requests: try network first, then cache
+  // All other requests: try network first, then cache GET requests
   event.respondWith(
     fetch(request)
       .then((networkResponse) => {
-        if (networkResponse && networkResponse.ok) {
+        if (networkResponse && networkResponse.ok && request.method === 'GET') {
           const clone = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
         }
